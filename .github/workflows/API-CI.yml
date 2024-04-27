@@ -1,0 +1,43 @@
+name: API CI
+
+on:
+  push:
+    branches:
+#      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        kotlin-version: [ "1.9.23" ]
+        java-version: [ "17" ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Kotlin
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          kotlin-version: ${{ matrix.kotlin-version }}
+          distribution: 'corretto'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', '*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Gradle Clean & Build
+        run: ./gradlew clean :build --no-daemon

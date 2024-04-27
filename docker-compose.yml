@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mania_mysql
+    hostname: mania_mysql
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    environment:
+      - MYSQL_USER=mania
+      - MYSQL_PASSWORD=mania
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=mania
+    ports:
+      - "3306:3306"
+
+
+  redis:
+    image: redis
+    container_name: mania_redis
+    hostname: mania_redis
+    ports:
+      - "6379:6379"
