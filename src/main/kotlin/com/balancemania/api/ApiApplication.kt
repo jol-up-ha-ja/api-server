@@ -15,7 +15,7 @@ class ApiApplication(
     private val buildProperties: BuildProperties,
     private val environment: Environment,
 ) : ApplicationListener<ApplicationReadyEvent> {
-    val logger = KotlinLogging.logger {  }
+    val logger = KotlinLogging.logger { }
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
         val application = buildProperties.name
@@ -35,4 +35,3 @@ fun init() {
     /** Setting the Default TimeZone */
     TimeZone.setDefault(TimeZone.getTimeZone(Zone.KST))
 }
-

@@ -8,7 +8,6 @@ import org.springframework.web.bind.support.WebExchangeBindException
 import org.springframework.web.server.ServerWebInputException
 import kotlin.coroutines.cancellation.CancellationException
 
-
 data class ErrorResponse(
     val errorCode: String,
     val reason: String,

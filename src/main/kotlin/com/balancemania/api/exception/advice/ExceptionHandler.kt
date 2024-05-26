@@ -7,8 +7,8 @@ import jakarta.validation.ConstraintViolationException
 import org.hibernate.TypeMismatchException
 import org.springframework.core.codec.DecodingException
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.support.WebExchangeBindException
@@ -22,7 +22,7 @@ class ExceptionHandler {
     @ExceptionHandler(WebExchangeBindException::class)
     protected fun handleWebExchangeBindException(
         e: WebExchangeBindException,
-        request:  HttpServletRequest,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         logger.warn { "WebExchangeBindException ${e.message}, requestUri=${request.requestURI}" }
         return ResponseEntity
@@ -34,7 +34,7 @@ class ExceptionHandler {
     @ExceptionHandler(DecodingException::class)
     protected fun handleDecodingException(
         e: DecodingException,
-        request:  HttpServletRequest,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         logger.warn { "DecodingException ${e.message}, requestUri=${request.requestURI}" }
         return ResponseEntity
@@ -46,7 +46,7 @@ class ExceptionHandler {
     @ExceptionHandler(ConstraintViolationException::class)
     protected fun handleConstraintViolationException(
         e: ConstraintViolationException,
-        request:  HttpServletRequest,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         logger.warn { "ConstraintViolationException ${e.message}, requestUri=${request.requestURI}" }
         return ResponseEntity
@@ -58,7 +58,7 @@ class ExceptionHandler {
     @ExceptionHandler(ServerWebInputException::class)
     protected fun handleServerWebInputException(
         e: ServerWebInputException,
-        request:  HttpServletRequest,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         logger.warn { "ServerWebInputException ${e.message}, requestUri=${request.requestURI}" }
         return ResponseEntity
@@ -70,7 +70,7 @@ class ExceptionHandler {
     @ExceptionHandler(TypeMismatchException::class)
     protected fun handleTypeMismatchException(
         e: TypeMismatchException,
-        request:  HttpServletRequest,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         logger.warn { "TypeMismatchException ${e.message}, requestUri=${request.requestURI}" }
         return ResponseEntity
@@ -86,7 +86,7 @@ class ExceptionHandler {
     @ExceptionHandler(CancellationException::class)
     protected fun handleCancellationException(
         e: CancellationException,
-        request:  HttpServletRequest,
+        request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
         logger.warn { "CancellationException ${e.message}, requestUri=${request.requestURI}" }
         return ResponseEntity
@@ -100,7 +100,8 @@ class ExceptionHandler {
         e: Exception,
         request: HttpServletRequest,
     ): ResponseEntity<ErrorResponse> {
-        logger.error { "CancellationException ${e.message}, requestUri=${request.requestURI}" }
+        logger.error { "Exception ${e.message}, requestUri=${request.requestURI} ${e.stackTrace}" }
+        e.printStackTrace()
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .contentType(MediaType.APPLICATION_JSON)
