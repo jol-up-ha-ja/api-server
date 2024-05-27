@@ -3,12 +3,12 @@ name: API CI
 on:
   push:
     branches:
-#      - main
-#      - develop
-#  pull_request:
-#    branches:
-#      - develop
-#    types: [ opened, synchronize, reopened ]
+      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   build:
