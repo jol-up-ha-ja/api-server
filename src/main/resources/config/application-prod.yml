@@ -16,9 +16,6 @@ logging:
 
 # SPRING
 spring:
-  config:
-    import:
-      - 'aws-parameterstore:/mania/api-server_prod/'
   jackson:
     serialization:
       indent_output: true
