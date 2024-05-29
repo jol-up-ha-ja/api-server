@@ -30,5 +30,8 @@ enum class ErrorCode(val status: HttpStatus, val description: String) {
     WITHDRAW_USER_ERROR(HttpStatus.BAD_REQUEST, "탈퇴한 유저입니다."),
     RESTRICTED_7_DAYS_USER_ERROR(HttpStatus.BAD_REQUEST, "7일 일시 정지된 유저입니다."),
     BANISHED_USER_ERROR(HttpStatus.BAD_REQUEST, "7일 일시 정지된 유저입니다."),
+
+    /** Balance Error Code */
+    NOT_FOUND_BALANCE_ERROR(HttpStatus.NOT_FOUND, "균형 정보를 찾을 수 없습니다."),
     ;
 }

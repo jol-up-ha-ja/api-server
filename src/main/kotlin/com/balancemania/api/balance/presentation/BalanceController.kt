@@ -1,9 +1,9 @@
 package com.balancemania.api.balance.presentation
 
 import com.balancemania.api.auth.model.AuthUser
+import com.balancemania.api.balance.application.BalanceFacade
 import com.balancemania.api.common.dto.ManiaPageRequest
-import com.balancemania.api.extension.executeWithCoroutine
-import com.balancemania.api.extension.wrapOk
+import com.balancemania.api.extension.*
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springdoc.core.annotations.ParameterObject
@@ -13,31 +13,33 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "균형 정보 API", description = "균형 정보 API")
 @RestController
 @RequestMapping(value = ["/api/v1/balances"], produces = [MediaType.APPLICATION_JSON_VALUE])
-class BalanceController {
+class BalanceController (
+    private val balanceFacade: BalanceFacade,
+){
     @Operation(summary = "균형 정보 조회")
     @GetMapping
     fun getBalances(
         user: AuthUser,
         @ParameterObject sliceRequest: ManiaPageRequest,
-    ) = executeWithCoroutine { Unit.wrapOk() }
+    ) = executeWithCoroutine { balanceFacade.getBalances(user, sliceRequest) }.wrapSlice()
 
     @Operation(summary = "균형 정보 단일 조회")
     @GetMapping("/{balanceId}")
     fun getBalance(
         user: AuthUser,
         @PathVariable balanceId: Long,
-    ) = executeWithCoroutine { Unit.wrapOk() }
+    ) = executeWithCoroutine { balanceFacade.getBalance(user, balanceId) }.wrapOk()
 
     @Operation(summary = "균형 정보 등록")
     @PostMapping
     fun updateUserInfo(
         user: AuthUser,
-    ) = executeWithCoroutine { Unit.wrapOk() }
+    ) = executeWithCoroutine { Unit.wrapOk() }.wrapCreated()
 
     @Operation(summary = "균형 정보 삭제")
     @DeleteMapping("/{balanceId}")
     fun deleteBalance(
         user: AuthUser,
         @PathVariable balanceId: Long,
-    ) = executeWithCoroutine { Unit.wrapOk() }
+    ) = executeWithCoroutine { balanceFacade.deleteBalance(user, balanceId) }.wrapVoid()
 }
