@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service
 class BalanceService(
     private val balanceRepository: BalanceRepository,
 ) {
+    fun saveSync(balance: Balance): Balance {
+        return balanceRepository.save(balance)
+    }
+
     fun deleteByIdSync(id: Long) {
         balanceRepository.deleteById(id)
     }

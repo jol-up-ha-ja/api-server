@@ -2,6 +2,7 @@ package com.balancemania.api.balance.presentation
 
 import com.balancemania.api.auth.model.AuthUser
 import com.balancemania.api.balance.application.BalanceFacade
+import com.balancemania.api.balance.model.request.CreateBalanceRequest
 import com.balancemania.api.common.dto.ManiaPageRequest
 import com.balancemania.api.extension.*
 import io.swagger.v3.oas.annotations.Operation
@@ -32,9 +33,10 @@ class BalanceController (
 
     @Operation(summary = "균형 정보 등록")
     @PostMapping
-    fun updateUserInfo(
+    fun createBalance(
         user: AuthUser,
-    ) = executeWithCoroutine { Unit.wrapOk() }.wrapCreated()
+        @RequestBody request: CreateBalanceRequest
+    ) = executeWithCoroutine { balanceFacade.createBalance(user, request) }.wrapCreated()
 
     @Operation(summary = "균형 정보 삭제")
     @DeleteMapping("/{balanceId}")

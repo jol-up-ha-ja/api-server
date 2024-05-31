@@ -16,33 +16,33 @@ class Balance(
 
     /** 정면 어깨 각도 */
     @Column(name = "front_shoulder_angle")
-    var frontShoulderAngle: Long? = null,
+    val frontShoulderAngle: Long,
 
-    /** 정면 어깨 각도 */
+    /** 정면 골반 각도 */
     @Column(name = "front_pelvis_angle")
-    var frontPelvisAngle: Long? = null,
+    val frontPelvisAngle: Long,
 
-    /** 정면 어깨 각도 */
+    /** 정면 무릎 각도 */
     @Column(name = "front_knee_angle")
-    var frontKneeAngle: Long? = null,
+    val frontKneeAngle: Long,
 
-    /** 정면 어깨 각도 */
+    /** 정면 발목 각도 */
     @Column(name = "front_ankle_angle")
-    var frontAnkleAngle: Long? = null,
+    val frontAnkleAngle: Long,
 
-    /** 정면 어깨 각도 */
+    /** 측면 목 각도 */
     @Column(name = "side_neck_angle")
-    var sideNeckAngle: Long? = null,
+    val sideNeckAngle: Long,
 
-    /** 정면 어깨 각도 */
+    /** 측면 신체 각도 */
     @Column(name = "side_body_angle")
-    var sideBodyAngle: Long? = null,
+    val sideBodyAngle: Long,
 
-    /** 정면 어깨 각도 */
+    /** 좌측 무게 */
     @Column(name = "left_weight")
-    var leftWeight: Long? = null,
+    val leftWeight: Long,
 
-    /** 정면 어깨 각도 */
+    /** 우측 무게 */
     @Column(name = "right_weight")
-    var rightWeight: Long? = null,
+    val rightWeight: Long,
 ) : BaseEntity()

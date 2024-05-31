@@ -1,6 +1,5 @@
 -- scheme
-CREATE
-DATABASE balancemania CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE balancemania CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 -- 유저 정보
 CREATE TABLE `user`
@@ -21,7 +20,7 @@ CREATE TABLE `user`
 CREATE TABLE `balance`
 (
     `id`                   bigint NOT NULL AUTO_INCREMENT COMMENT 'balance id',
-    `uid`                  bigint NOT NULL AUTO_INCREMENT COMMENT 'user id',
+    `uid`                  bigint NOT NULL COMMENT 'user id',
     `front_shoulder_angle` bigint NOT NULL COMMENT '정면 어깨 각도',
     `front_pelvis_angle`   bigint NOT NULL COMMENT '정면 골반 각도',
     `front_knee_angle`     bigint NOT NULL COMMENT '정면 무릎 각도',

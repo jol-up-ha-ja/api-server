@@ -53,7 +53,6 @@ mania:
     show-sql: false
     database: mysql
 
-
 # AUTH
 auth:
   jwt:
@@ -78,3 +77,6 @@ oauth-url:
     kauth-url: ${KAKAO_KAUTH_URL}
     kapi-url: ${KAKAO_KAPI_URL}
     redirect-url: ${KAKAO_REDIRECT_URL}
+
+media-pipe:
+  url: ${MEDIAPIPE_IMG_ANALYSIS_URL}
