@@ -38,7 +38,6 @@ class UserResolver(
         }.onFailure { throw InvalidTokenException(ErrorCode.INVALID_TOKEN) }
             .getOrThrow()
 
-
         return authUserToken
     }
 }

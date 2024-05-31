@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @ConfigurationProperties(prefix = "media-pipe")
 @ConfigurationPropertiesBinding
-data class MediaPipeConfig (
+data class MediaPipeConfig(
     @field:NotBlank
     var url: String = "",
 )

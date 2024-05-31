@@ -1,6 +1,6 @@
 package com.balancemania.api.client.mediapipe.model
 
-data class MediaPipeImgAnalysisResponse (
+data class MediaPipeImgAnalysisResponse(
     /** 정면 어깨 각도 */
     val frontShoulderAngle: Long,
 

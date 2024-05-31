@@ -20,7 +20,7 @@ interface BalanceRepository : JpaRepository<Balance, Long>, BalanceCustomReposit
     fun existsByIdAndUid(uid: Long, balanceId: Long): Boolean
 }
 
-interface BalanceCustomRepository{
+interface BalanceCustomRepository {
     @Transactional(readOnly = true)
     fun getBalancesByUid(uid: Long, pageable: Pageable): Slice<Balance>
 }
@@ -34,7 +34,7 @@ class BalanceCustomRepositoryImpl : BalanceCustomRepository, QuerydslRepositoryS
 
     private val qBalance = QBalance.balance
 
-    override fun getBalancesByUid(uid:Long, pageable: Pageable): Slice<Balance> {
+    override fun getBalancesByUid(uid: Long, pageable: Pageable): Slice<Balance> {
         val query = JPAQuery<QBalance>(entityManager)
             .select(qBalance)
             .from(qBalance)

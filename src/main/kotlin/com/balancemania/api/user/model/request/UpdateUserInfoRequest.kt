@@ -3,7 +3,7 @@ package com.balancemania.api.user.model.request
 import com.balancemania.api.user.domain.vo.Gender
 import java.time.LocalDate
 
-data class UpdateUserInfoRequest (
+data class UpdateUserInfoRequest(
     /** 이름 */
     val name: String,
 

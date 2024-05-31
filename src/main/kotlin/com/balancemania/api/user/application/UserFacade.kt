@@ -1,6 +1,5 @@
 package com.balancemania.api.user.application
 
-import arrow.core.nel
 import com.balancemania.api.auth.model.AuthUser
 import com.balancemania.api.config.database.TransactionTemplates
 import com.balancemania.api.extension.coExecute
@@ -22,7 +21,7 @@ class UserFacade(
     suspend fun updateUserInfo(user: AuthUser, uid: Long, request: UpdateUserInfoRequest) {
         val user = userService.findByIdOrThrow(uid)
 
-        txTemplates.writer.coExecute{
+        txTemplates.writer.coExecute {
             user.apply {
                 name = request.name
                 gender = request.gender

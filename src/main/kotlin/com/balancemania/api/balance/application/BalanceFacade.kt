@@ -52,7 +52,7 @@ class BalanceFacade(
                 sideNeckAngle = analyzedData.sideNeckAngle,
                 sideBodyAngle = analyzedData.sideBodyAngle,
                 leftWeight = request.leftWeight.toInteger(),
-                rightWeight = request.rightWeight.toInteger(),
+                rightWeight = request.rightWeight.toInteger()
             ).run { balanceService.saveSync(this) }
         }.let { balance -> GetBalanceResponse(BalanceModel.from(balance)) }
     }

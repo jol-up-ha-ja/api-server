@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "균형 정보 API", description = "균형 정보 API")
 @RestController
 @RequestMapping(value = ["/api/v1/balances"], produces = [MediaType.APPLICATION_JSON_VALUE])
-class BalanceController (
+class BalanceController(
     private val balanceFacade: BalanceFacade,
-){
+) {
     @Operation(summary = "균형 정보 조회")
     @GetMapping
     fun getBalances(
@@ -35,7 +35,7 @@ class BalanceController (
     @PostMapping
     fun createBalance(
         user: AuthUser,
-        @RequestBody request: CreateBalanceRequest
+        @RequestBody request: CreateBalanceRequest,
     ) = executeWithCoroutine { balanceFacade.createBalance(user, request) }.wrapCreated()
 
     @Operation(summary = "균형 정보 삭제")

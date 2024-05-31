@@ -3,7 +3,6 @@ package com.balancemania.api.auth.application.oauth
 import com.balancemania.api.auth.model.OAuthUserInfoDto
 import com.balancemania.api.auth.model.response.OAuthLoginLinkResponse
 import com.balancemania.api.auth.model.response.OAuthTokenResponse
-import com.balancemania.api.client.mediapipe.MediaPipeClient
 import com.balancemania.api.client.oauth.kakao.KakaoClient
 import com.balancemania.api.config.auth.OAuthSecretConfig
 import com.balancemania.api.config.auth.OAuthUrlConfig

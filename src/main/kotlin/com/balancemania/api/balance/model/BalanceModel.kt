@@ -2,9 +2,6 @@ package com.balancemania.api.balance.model
 
 import com.balancemania.api.balance.domain.Balance
 import com.balancemania.api.extension.toRealNumber
-import com.fasterxml.jackson.annotation.JsonFormat
-import jakarta.persistence.Column
-import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
 
 data class BalanceModel(
@@ -57,7 +54,7 @@ data class BalanceModel(
                 leftWeight = balance.leftWeight.toRealNumber(),
                 rightWeight = balance.rightWeight.toRealNumber(),
                 createdAt = balance.createdAt,
-                modifiedAt = balance.modifiedAt,
+                modifiedAt = balance.modifiedAt
             )
         }
     }
