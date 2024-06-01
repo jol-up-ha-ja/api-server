@@ -1,4 +1,4 @@
-package com.balancemania.api.config.interceptor
+package com.balancemania.api.config.filter
 
 import com.balancemania.api.common.MDC_KEY_TRACE_ID
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -23,13 +23,16 @@ class MdcFilter : Filter {
         val httpReq = request as HttpServletRequest
         val httpRes = response as HttpServletResponse
 
-        val eventId = UUID.randomUUID().toString()
-        MDC.put(MDC_KEY_TRACE_ID, eventId)
+        val traceId = UUID.randomUUID().toString()
+        MDC.put(MDC_KEY_TRACE_ID, traceId)
         logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpReq.method} ${httpReq.requestURI} " }
 
-        chain.doFilter(request, response)
+        try {
+            chain.doFilter(request, response)
+        } finally {
+            logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpRes.status} ${httpReq.requestURI} " }
+            MDC.clear()
+        }
 
-        logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpRes.status} ${httpReq.requestURI} " }
-        MDC.clear()
     }
 }
