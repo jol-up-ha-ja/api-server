@@ -18,7 +18,7 @@ class User(
 
     /** oauth 정보 */
     @Embedded
-    var oauthInfo: OauthInfo,
+    val oauthInfo: OauthInfo,
 
     /** 이름 */
     var name: String,
