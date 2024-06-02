@@ -13,7 +13,7 @@ class UserFacade(
     private val userService: UserService,
     private val txTemplates: TransactionTemplates,
 ) {
-    suspend fun getUserInfo(user: AuthUser) {
+    suspend fun getUserInfo(user: AuthUser): GetUserInfoResponse {
         return userService.findByIdOrThrow(user.uid)
             .let { user -> GetUserInfoResponse(UserModel.from(user)) }
     }
