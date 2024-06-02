@@ -38,19 +38,19 @@ class BalanceFacade(
 
     suspend fun createBalance(user: AuthUser, request: CreateBalanceRequest): GetBalanceResponse {
         val analyzedData = mediaPipeService.requestImgAnalysis(
-            frontImgUrl = request.frontImgUrl,
-            sideImgUrl = request.sideImgUrl
+            frontImgKey = request.frontImgKey,
+            sideImgKey = request.sideImgKey
         )
 
         return txTemplates.writer.coExecute {
             Balance(
                 uid = user.uid,
-                frontShoulderAngle = analyzedData.frontShoulderAngle,
-                frontPelvisAngle = analyzedData.frontPelvisAngle,
-                frontKneeAngle = analyzedData.frontKneeAngle,
-                frontAnkleAngle = analyzedData.frontAnkleAngle,
-                sideNeckAngle = analyzedData.sideNeckAngle,
-                sideBodyAngle = analyzedData.sideBodyAngle,
+                frontShoulderAngle = analyzedData.frontShoulderAngle.toInteger(),
+                frontPelvisAngle = analyzedData.frontPelvisAngle.toInteger(),
+                frontKneeAngle = analyzedData.frontKneeAngle.toInteger(),
+                frontAnkleAngle = analyzedData.frontAnkleAngle.toInteger(),
+                sideNeckAngle = analyzedData.sideNeckAngle.toInteger(),
+                sideBodyAngle = analyzedData.sideBodyAngle.toInteger(),
                 leftWeight = request.leftWeight.toInteger(),
                 rightWeight = request.rightWeight.toInteger()
             ).run { balanceService.saveSync(this) }

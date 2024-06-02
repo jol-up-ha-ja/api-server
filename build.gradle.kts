@@ -48,7 +48,6 @@ allOpen {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
@@ -63,10 +62,8 @@ dependencies {
     implementation("io.arrow-kt:arrow-fx-coroutines:1.2.1")
     implementation("io.arrow-kt:arrow-fx-stm:1.2.1")
 
-    implementation(
-        platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.0")
-    )
-    implementation("io.awspring.cloud:spring-cloud-aws-starter-parameter-store")
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.0"))
+    implementation("io.awspring.cloud:spring-cloud-aws-s3")
 
     implementation("io.github.oshai:kotlin-logging-jvm:6.0.3")
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")

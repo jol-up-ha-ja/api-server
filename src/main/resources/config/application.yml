@@ -26,6 +26,17 @@ spring:
     redis:
       repositories:
         enabled: false
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID:testKey}
+        secret-key: ${AWS_SECRET_ACCESS_KEY:secretKey}
+      region:
+        static: ap-northeast-2
+      s3:
+        bucket: ${AWS_S3_BUCKET:bucket}
+      stack:
+        auto: false
 
 # DOCS
 springdoc:
@@ -80,3 +91,4 @@ oauth-url:
 
 media-pipe:
   url: ${MEDIAPIPE_IMG_ANALYSIS_URL}
+

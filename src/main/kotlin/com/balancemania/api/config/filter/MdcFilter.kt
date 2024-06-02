@@ -33,6 +33,5 @@ class MdcFilter : Filter {
             logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpRes.status} ${httpReq.requestURI} " }
             MDC.clear()
         }
-
     }
 }

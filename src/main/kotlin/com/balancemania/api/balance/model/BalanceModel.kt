@@ -11,22 +11,22 @@ data class BalanceModel(
     val uid: Long,
 
     /** 정면 어깨 각도 */
-    val frontShoulderAngle: Long,
+    val frontShoulderAngle: Float,
 
     /** 정면 골반 각도 */
-    val frontPelvisAngle: Long,
+    val frontPelvisAngle: Float,
 
     /** 정면 무릎 각도 */
-    val frontKneeAngle: Long,
+    val frontKneeAngle: Float,
 
     /** 정면 발목 각도 */
-    val frontAnkleAngle: Long,
+    val frontAnkleAngle: Float,
 
     /** 측면 목 각도 */
-    val sideNeckAngle: Long,
+    val sideNeckAngle: Float,
 
     /** 측면 신체 각도 */
-    val sideBodyAngle: Long,
+    val sideBodyAngle: Float,
 
     /** 좌측 무게 */
     val leftWeight: Float,
@@ -45,12 +45,12 @@ data class BalanceModel(
             return BalanceModel(
                 id = balance.id,
                 uid = balance.uid,
-                frontPelvisAngle = balance.frontPelvisAngle,
-                frontShoulderAngle = balance.frontShoulderAngle,
-                frontKneeAngle = balance.frontKneeAngle,
-                frontAnkleAngle = balance.frontAnkleAngle,
-                sideBodyAngle = balance.sideBodyAngle,
-                sideNeckAngle = balance.sideNeckAngle,
+                frontPelvisAngle = balance.frontPelvisAngle.toRealNumber(),
+                frontShoulderAngle = balance.frontShoulderAngle.toRealNumber(),
+                frontKneeAngle = balance.frontKneeAngle.toRealNumber(),
+                frontAnkleAngle = balance.frontAnkleAngle.toRealNumber(),
+                sideBodyAngle = balance.sideBodyAngle.toRealNumber(),
+                sideNeckAngle = balance.sideNeckAngle.toRealNumber(),
                 leftWeight = balance.leftWeight.toRealNumber(),
                 rightWeight = balance.rightWeight.toRealNumber(),
                 createdAt = balance.createdAt,

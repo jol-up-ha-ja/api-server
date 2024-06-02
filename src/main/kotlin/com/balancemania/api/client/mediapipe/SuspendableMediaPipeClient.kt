@@ -1,5 +1,6 @@
 package com.balancemania.api.client.mediapipe
 
+import com.balancemania.api.client.mediapipe.model.MediaPipeImgAnalysisRequest
 import com.balancemania.api.client.mediapipe.model.MediaPipeImgAnalysisResponse
 import com.balancemania.api.config.MediaPipeConfig
 import com.balancemania.api.exception.ErrorCode
@@ -13,9 +14,10 @@ class SuspendableMediaPipeClient(
 ) : MediaPipeClient {
     private val logger = KotlinLogging.logger { }
 
-    override suspend fun getImgAnalysis(frontImgUrl: String, sideImgUrl: String): MediaPipeImgAnalysisResponse {
+    override suspend fun getImgAnalysis(body: MediaPipeImgAnalysisRequest): MediaPipeImgAnalysisResponse {
         return webClient.post()
             .uri(mediaPipeConfig.url)
+            .bodyValue(body)
             .retrieve()
             .bodyToMono(MediaPipeImgAnalysisResponse::class.java)
             .block() ?: throw FailToExecuteException(ErrorCode.EXTERNAL_SERVER_ERROR)

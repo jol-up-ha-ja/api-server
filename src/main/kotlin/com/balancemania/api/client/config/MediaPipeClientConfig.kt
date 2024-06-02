@@ -16,7 +16,11 @@ class MediaPipeClientConfig(
 
     @Bean
     fun mediaPipeClient(): MediaPipeClient {
-        val webClient = WebClientFactory.generateWithoutBaseUrl()
+        val webClient = WebClientFactory.generateWithoutBaseUrl(
+            connectionTimeoutMillis = 1000 * 10,
+            readTimeoutMillis = 1000 * 10,
+            writeTimeoutMillis = 1000 * 10,
+        )
         logger.info { "initialized mediaPipe client" }
         return SuspendableMediaPipeClient(webClient, mediaPipeConfig)
     }

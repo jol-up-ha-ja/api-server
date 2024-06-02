@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <configuration scan="true">
-<!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="src/main/resources/logback-file-spring.xml"/>
 
     <springProperty scope="context" name="logLevel" source="logging.level.root" defaultValue="INFO"/>
 
@@ -10,37 +12,32 @@
 
     <jmxConfigurator/>
 
-    <property name="console.format"
-              value="[%-20(%cyan(%date{HH:mm:ss.SSS})] [%thread] [traceId=%X{traceId}]) %highlight(%-5level) %magenta(%marker|%logger{36}): %msg%n%rEx"/>
+    <property name="STDOUT_LOG_PATTERN"
+              value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) [%25.25thread] %clr([traceId=%X{traceId}]){faint} %clr(---){faint} %clr(${LOG_CORRELATION_PATTERN:-}){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
-    <property name="console.format.prod"
-              value="[%-20(%cyan(%date{yyyy.MM.dd HH:mm:ss.SSS})] [%thread] [traceId=%X{traceId}]) %highlight(%-5level) %magenta(%marker|%logger{36}): %msg%n%rEx"/>
-
-
-
-    <!-- console -->
-    <appender name="CONSOLE_DEFAULT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${console.format}</pattern>
+            <pattern>${STDOUT_LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <appender name="CONSOLE_PROD" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="SENTRY" class="io.sentry.logback.SentryAppender">
+        <minimumEventLevel>WARN</minimumEventLevel>
+        <minimumBreadcrumbLevel>WARN</minimumBreadcrumbLevel>
         <encoder>
-            <pattern>${console.format.prod}</pattern>
+            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-
 
     <springProfile name="default, dev">
         <root level="${logLevel}">
-            <appender-ref ref="CONSOLE_DEFAULT"/>
+            <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
 
     <springProfile name="prod">
         <root level="${logLevel}">
-            <appender-ref ref="CONSOLE_PROD"/>
+            <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
 </configuration>

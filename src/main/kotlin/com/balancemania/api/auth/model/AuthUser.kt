@@ -35,7 +35,7 @@ data class AuthUserImpl(
     }
 }
 
-const val AUTH_TOKEN_KEY = "X-AUTH-TOKEN"
+const val AUTH_TOKEN_KEY = "X-MANIA-AUTH-TOKEN"
 
 data class AuthUserToken(
     val key: String,

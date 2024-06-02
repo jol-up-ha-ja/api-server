@@ -13,3 +13,7 @@ object Zone {
 fun LocalDateTime.toInstant(): Instant {
     return this.toInstant(ZoneOffset.of("+09:00"))
 }
+
+fun Instant.toCurrentZone(): Instant {
+    return this.plusSeconds(60 * 60 * 9)
+}
