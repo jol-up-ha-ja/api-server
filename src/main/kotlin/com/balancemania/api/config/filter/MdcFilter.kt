@@ -24,10 +24,11 @@ class MdcFilter : Filter {
         val httpRes = response as HttpServletResponse
 
         val traceId = UUID.randomUUID().toString()
-        MDC.put(MDC_KEY_TRACE_ID, traceId)
-        logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpReq.method} ${httpReq.requestURI} " }
 
         try {
+            MDC.put(MDC_KEY_TRACE_ID, traceId)
+            logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpReq.method} ${httpReq.requestURI} " }
+
             chain.doFilter(request, response)
         } finally {
             logger.info { "[${MDC.get(MDC_KEY_TRACE_ID)}] ${httpRes.status} ${httpReq.requestURI} " }

@@ -6,8 +6,7 @@ import com.balancemania.api.client.oauth.kakao.model.KakaoOAuthWithdrawResponse
 import com.balancemania.api.common.BEARER
 import com.balancemania.api.common.KAKAO_AK
 import com.balancemania.api.config.auth.OAuthUrlConfig
-import com.balancemania.api.exception.ErrorCode
-import com.balancemania.api.exception.FailToExecuteException
+import com.balancemania.api.extension.awaitSingleWithMdc
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.reactive.function.BodyInserters
@@ -36,7 +35,7 @@ class SuspendableKakaoClient(
             .uri(url)
             .retrieve()
             .bodyToMono(KakaoOAuthTokenResponse::class.java)
-            .block() ?: throw FailToExecuteException(ErrorCode.EXTERNAL_SERVER_ERROR)
+            .awaitSingleWithMdc()
     }
 
     override suspend fun getUserInfo(
@@ -47,7 +46,7 @@ class SuspendableKakaoClient(
             .header("Authorization", BEARER + accessToken)
             .retrieve()
             .bodyToMono(KakaoOAuthUserInfoResponse::class.java)
-            .block() ?: throw FailToExecuteException(ErrorCode.EXTERNAL_SERVER_ERROR)
+            .awaitSingleWithMdc()
     }
 
     override suspend fun withdraw(targetId: String, adminKey: String): KakaoOAuthWithdrawResponse? {
@@ -65,6 +64,6 @@ class SuspendableKakaoClient(
             .body(BodyInserters.fromFormData(multiValueMap))
             .retrieve()
             .bodyToMono(KakaoOAuthWithdrawResponse::class.java)
-            .block() ?: throw FailToExecuteException(ErrorCode.EXTERNAL_SERVER_ERROR)
+            .awaitSingleWithMdc()
     }
 }

@@ -5,6 +5,6 @@ import com.balancemania.api.client.mediapipe.model.MediaPipeImgAnalysisResponse
 
 interface MediaPipeClient {
     suspend fun getImgAnalysis(
-        body: MediaPipeImgAnalysisRequest
+        body: MediaPipeImgAnalysisRequest,
     ): MediaPipeImgAnalysisResponse
 }

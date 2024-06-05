@@ -56,6 +56,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 

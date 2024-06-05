@@ -3,8 +3,7 @@ package com.balancemania.api.client.mediapipe
 import com.balancemania.api.client.mediapipe.model.MediaPipeImgAnalysisRequest
 import com.balancemania.api.client.mediapipe.model.MediaPipeImgAnalysisResponse
 import com.balancemania.api.config.MediaPipeConfig
-import com.balancemania.api.exception.ErrorCode
-import com.balancemania.api.exception.FailToExecuteException
+import com.balancemania.api.extension.awaitSingleWithMdc
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -20,6 +19,6 @@ class SuspendableMediaPipeClient(
             .bodyValue(body)
             .retrieve()
             .bodyToMono(MediaPipeImgAnalysisResponse::class.java)
-            .block() ?: throw FailToExecuteException(ErrorCode.EXTERNAL_SERVER_ERROR)
+            .awaitSingleWithMdc()
     }
 }
