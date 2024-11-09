@@ -11,11 +11,12 @@ import com.balancemania.api.common.dto.ManiaPageRequest
 import com.balancemania.api.config.database.TransactionTemplates
 import com.balancemania.api.exception.ErrorCode
 import com.balancemania.api.exception.InvalidRequestException
-import com.balancemania.api.extension.coExecute
+import com.balancemania.api.extension.executeNotNull
 import com.balancemania.api.extension.toInteger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.slf4j.MDCContext
 import org.springframework.data.domain.Slice
 import org.springframework.stereotype.Service
 
@@ -26,25 +27,24 @@ class BalanceFacade(
     private val weightService: WeightService,
     private val txTemplates: TransactionTemplates,
 ) {
-    suspend fun getBalances(user: AuthUser, sliceRequest: ManiaPageRequest): Slice<BalanceModel> {
+    fun getBalances(user: AuthUser, sliceRequest: ManiaPageRequest): Slice<BalanceModel> {
         return balanceService.getBalancesByUid(user.uid, sliceRequest.toDefault())
             .map { balance -> BalanceModel.from(balance) }
     }
 
-    suspend fun getBalance(user: AuthUser, balanceId: Long): GetBalanceResponse {
-        return balanceService.findByIdAndUid(user.uid, balanceId)
-            .let { balance -> GetBalanceResponse(BalanceModel.from(balance)) }
+    fun getBalance(user: AuthUser, balanceId: Long): GetBalanceResponse {
+        return GetBalanceResponse(BalanceModel.from(balanceService.findByIdAndUid(user.uid, balanceId)))
     }
 
-    suspend fun deleteBalance(user: AuthUser, balanceId: Long) {
+    fun deleteBalance(user: AuthUser, balanceId: Long) {
         balanceService.validateExistByIdAndUid(user.uid, balanceId)
 
-        txTemplates.writer.coExecute {
+        txTemplates.writer.executeNotNull() {
             balanceService.deleteByIdSync(balanceId)
         }
     }
 
-    suspend fun createBalance(user: AuthUser, request: CreateBalanceRequest): GetBalanceResponse {
+    fun createBalance(user: AuthUser, request: CreateBalanceRequest): GetBalanceResponse {
         val weight = weightService.getWeightOrNull(user)
             ?: throw InvalidRequestException(ErrorCode.NOT_FOUND_WEIGHT_ERROR)
 
@@ -53,7 +53,7 @@ class BalanceFacade(
             sideImgKey = request.sideImgKey
         )
 
-        val balance = txTemplates.writer.coExecute {
+        val balance = txTemplates.writer.executeNotNull {
             Balance(
                 uid = user.uid,
                 frontShoulderAngle = analyzedData.frontShoulderAngle.toInteger(),
@@ -67,18 +67,20 @@ class BalanceFacade(
             ).run { balanceService.saveSync(this) }
         }
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO + MDCContext()).launch {
             weightService.delete(user)
         }
 
         return GetBalanceResponse(BalanceModel.from(balance))
     }
 
-    suspend fun postWeight(user: AuthUser, request: PostWeightRequest) {
-        Weight(
-            uid = user.uid,
-            rightWeight = request.rightWeight.toInteger(),
-            leftWeight = request.leftWeight.toInteger()
-        ).also { weightService.save(it) }
+    fun postWeight(user: AuthUser, request: PostWeightRequest) {
+        txTemplates.writer.executeNotNull {
+            Weight(
+                uid = user.uid,
+                rightWeight = request.rightWeight.toInteger(),
+                leftWeight = request.leftWeight.toInteger()
+            ).also { weightService.save(it) }
+        }
     }
 }

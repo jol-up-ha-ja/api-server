@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service
 class WeightService(
     private val weightRepository: WeightRepository,
 ) {
-    suspend fun save(weight: Weight) {
+    fun save(weight: Weight) {
         weightRepository.save(weight)
     }
 
-    suspend fun getWeightOrNull(user: AuthUser): Weight? {
+    fun getWeightOrNull(user: AuthUser): Weight? {
         return weightRepository.getOrNull(user.uid)
     }
 
-    suspend fun delete(user: AuthUser) {
+    fun delete(user: AuthUser) {
         weightRepository.delete(user.uid)
     }
 }

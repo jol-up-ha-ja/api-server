@@ -1,7 +1,6 @@
 package com.balancemania.api.s3.presentation
 
 import com.balancemania.api.auth.model.AuthUser
-import com.balancemania.api.extension.executeWithCoroutine
 import com.balancemania.api.extension.wrapOk
 import com.balancemania.api.s3.application.S3Facade
 import com.balancemania.api.s3.model.ImageType
@@ -24,5 +23,5 @@ class S3Controller(
     fun getPresignedUrl(
         user: AuthUser,
         @RequestParam(defaultValue = "jpg") imgType: ImageType,
-    ) = executeWithCoroutine { s3Facade.getPresignedUrl(user, imgType) }.wrapOk()
+    ) = s3Facade.getPresignedUrl(user, imgType).wrapOk()
 }

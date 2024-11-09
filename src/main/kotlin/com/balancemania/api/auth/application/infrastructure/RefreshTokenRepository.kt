@@ -9,14 +9,14 @@ import org.springframework.stereotype.Repository
 class RefreshTokenRepository(
     private val cacheService: CacheService,
 ) {
-    suspend fun save(value: RefreshToken, ttl: Long) {
+    fun save(value: RefreshToken, ttl: Long) {
         cacheService.set(
             cache = getCache(value.uid.toString(), ttl),
             value = value.refreshToken
         )
     }
 
-    suspend fun deleteByKey(key: String) {
+    fun deleteByKey(key: String) {
         cacheService.delete(cache = getCache(key, 0))
     }
 

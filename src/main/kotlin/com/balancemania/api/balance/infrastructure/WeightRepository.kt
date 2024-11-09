@@ -13,18 +13,18 @@ class WeightRepository(
         return Cache.getWeightCache(key = key)
     }
 
-    suspend fun save(value: Weight) {
+    fun save(value: Weight) {
         cacheService.set(
             cache = getCache("CACHE_WEIGHT_${value.uid}"),
             value = value
         )
     }
 
-    suspend fun getOrNull(uid: Long): Weight? {
+    fun getOrNull(uid: Long): Weight? {
         return cacheService.getOrNull(getCache("CACHE_WEIGHT_$uid"))
     }
 
-    suspend fun delete(uid: Long) {
+    fun delete(uid: Long) {
         cacheService.delete(cache = getCache("CACHE_WEIGHT_$uid"))
     }
 }

@@ -27,7 +27,7 @@ class S3PresignedUrlService(
 
     val logger = KotlinLogging.logger { }
 
-    suspend fun generatePresignedUrl(user: AuthUser, imageType: ImageType): S3PresignedUrlModel {
+    fun generatePresignedUrl(user: AuthUser, imageType: ImageType): S3PresignedUrlModel {
         val fileName = "${user.uid}/${UUID.randomUUID()}.${imageType.type}"
 
         val metadata = ObjectMetadata.builder()

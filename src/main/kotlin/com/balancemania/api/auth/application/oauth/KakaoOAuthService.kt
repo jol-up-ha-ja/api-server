@@ -6,9 +6,7 @@ import com.balancemania.api.auth.model.response.OAuthTokenResponse
 import com.balancemania.api.client.oauth.kakao.KakaoClient
 import com.balancemania.api.config.auth.OAuthSecretConfig
 import com.balancemania.api.config.auth.OAuthUrlConfig
-import com.balancemania.api.extension.withMDCContext
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.coroutines.Dispatchers
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -23,7 +21,7 @@ class KakaoOAuthService(
     private val logger = KotlinLogging.logger { }
 
     /** link */
-    suspend fun getOAuthLoginLinkDev(): OAuthLoginLinkResponse {
+    fun getOAuthLoginLinkDev(): OAuthLoginLinkResponse {
         val redirectUrl = domainName + kakaoOAuthUrlConfig.redirectUrl
         return OAuthLoginLinkResponse(
             kakaoOAuthUrlConfig.kauthUrl +
@@ -35,7 +33,7 @@ class KakaoOAuthService(
         )
     }
 
-    suspend fun getOAuthWithdrawLoginLink(uri: String): OAuthLoginLinkResponse {
+    fun getOAuthWithdrawLoginLink(uri: String): OAuthLoginLinkResponse {
         val redirectUrl = domainName + kakaoOAuthUrlConfig.withdrawCallbackUrl
         return OAuthLoginLinkResponse(
             kakaoOAuthUrlConfig.kauthUrl +
@@ -48,38 +46,33 @@ class KakaoOAuthService(
     }
 
     /** oauth token 받아오기 */
-    suspend fun getOAuthTokenDev(code: String): OAuthTokenResponse {
+    fun getOAuthTokenDev(code: String): OAuthTokenResponse {
         val redirectUrl = domainName + kakaoOAuthUrlConfig.redirectUrl
         return getKakaoToken(redirectUrl, code)
     }
 
-    suspend fun getOAuthWithdrawToken(code: String): OAuthTokenResponse {
+    fun getOAuthWithdrawToken(code: String): OAuthTokenResponse {
         val redirectUrl = domainName + kakaoOAuthUrlConfig.withdrawCallbackUrl
         return getKakaoToken(redirectUrl, code)
     }
 
-    private suspend fun getKakaoToken(redirectUrl: String, code: String): OAuthTokenResponse {
-        return withMDCContext(Dispatchers.IO) {
-            kakaoClient.getToken(
-                redirectUrl = redirectUrl,
-                code = code,
-                clientId = kakaoOAuthSecretConfig.clientId,
-                clientSecret = kakaoOAuthSecretConfig.clientSecret
-            )
-        }.run { OAuthTokenResponse.fromKakao(this) }
+    private fun getKakaoToken(redirectUrl: String, code: String): OAuthTokenResponse {
+        return kakaoClient.getToken(
+            redirectUrl = redirectUrl,
+            code = code,
+            clientId = kakaoOAuthSecretConfig.clientId,
+            clientSecret = kakaoOAuthSecretConfig.clientSecret
+        ).run { OAuthTokenResponse.fromKakao(this) }
     }
 
     /** 유저 정보를 가져옵니다. */
-    suspend fun getOAuthInfo(accessToken: String): OAuthUserInfoDto {
-        return withMDCContext(Dispatchers.IO) {
-            kakaoClient.getUserInfo(accessToken)
-        }.run { OAuthUserInfoDto.fromKakao(this) }
+    fun getOAuthInfo(accessToken: String): OAuthUserInfoDto {
+        return kakaoClient.getUserInfo(accessToken)
+            .run { OAuthUserInfoDto.fromKakao(this) }
     }
 
     /** 회원 탈퇴합니다 */
-    suspend fun withdraw(oAuthId: String) {
-        withMDCContext(Dispatchers.IO) {
-            kakaoClient.withdraw(targetId = oAuthId, adminKey = kakaoOAuthSecretConfig.adminKey)
-        }
+    fun withdraw(oAuthId: String) {
+        kakaoClient.withdraw(targetId = oAuthId, adminKey = kakaoOAuthSecretConfig.adminKey)
     }
 }

@@ -3,7 +3,6 @@ package com.balancemania.api.auth.presentation
 import com.balancemania.api.auth.application.AuthFacade
 import com.balancemania.api.auth.model.AuthUser
 import com.balancemania.api.auth.model.response.TokenRefreshRequest
-import com.balancemania.api.extension.executeWithCoroutine
 import com.balancemania.api.extension.wrapOk
 import com.balancemania.api.extension.wrapVoid
 import io.swagger.v3.oas.annotations.Operation
@@ -22,14 +21,14 @@ class AuthController(
     @PostMapping("/logout")
     fun logout(
         authUser: AuthUser,
-    ) = executeWithCoroutine { authFacade.logout(authUser).wrapVoid() }
+    ) = authFacade.logout(authUser).wrapVoid()
 
     /** 토큰 재발급 */
     @Operation(summary = "token refresh")
     @PostMapping("/token/refresh")
     fun tokenRefresh(
         @RequestBody request: TokenRefreshRequest,
-    ) = executeWithCoroutine { authFacade.refreshToken(request).wrapOk() }
+    ) = authFacade.refreshToken(request).wrapOk()
 
     /**
      *  회원 탈퇴
@@ -38,5 +37,5 @@ class AuthController(
     @PostMapping("/withdraw")
     fun tokenRefresh(
         authUser: AuthUser,
-    ) = executeWithCoroutine { authFacade.withdraw(authUser).wrapVoid() }
+    ) = authFacade.withdraw(authUser).wrapVoid()
 }

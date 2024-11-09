@@ -15,14 +15,14 @@ class OAuthService(
     private val logger = KotlinLogging.logger { }
 
     /** oauth withdraw 페이지용 login link 가져오기 */
-    suspend fun getOAuthWithdrawLoginLink(provider: OAuthProvider, uri: String): OAuthLoginLinkResponse {
+    fun getOAuthWithdrawLoginLink(provider: OAuthProvider, uri: String): OAuthLoginLinkResponse {
         return when (provider) {
             OAuthProvider.KAKAO -> kakaoOAuthService.getOAuthWithdrawLoginLink(uri)
         }
     }
 
     /** oauth token 가져오기 */
-    suspend fun getOAuthWithdrawToken(
+    fun getOAuthWithdrawToken(
         provider: OAuthProvider,
         code: String,
     ): OAuthTokenResponse {
@@ -32,7 +32,7 @@ class OAuthService(
     }
 
     /** oauth info 가져오기 */
-    suspend fun getOAuthInfo(
+    fun getOAuthInfo(
         provider: OAuthProvider,
         accessToken: String,
     ): OauthInfo {
@@ -42,7 +42,7 @@ class OAuthService(
     }
 
     /** oauth 유저 회원 탈퇴하기 */
-    suspend fun withdraw(oauthInfo: OauthInfo) {
+    fun withdraw(oauthInfo: OauthInfo) {
         when (oauthInfo.oAuthProvider) {
             OAuthProvider.KAKAO -> kakaoOAuthService.withdraw(oauthInfo.oAuthId)
         }

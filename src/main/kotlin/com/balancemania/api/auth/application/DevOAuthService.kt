@@ -14,14 +14,14 @@ class DevOAuthService(
     private val logger = KotlinLogging.logger { }
 
     /** oauth login link 가져오기 */
-    suspend fun getOAuthLoginLinkDev(provider: OAuthProvider): OAuthLoginLinkResponse {
+    fun getOAuthLoginLinkDev(provider: OAuthProvider): OAuthLoginLinkResponse {
         return when (provider) {
             OAuthProvider.KAKAO -> kakaoOAuthService.getOAuthLoginLinkDev()
         }
     }
 
     /** oauth token 가져오기 */
-    suspend fun getOAuthTokenDev(provider: OAuthProvider, code: String): OAuthTokenResponse {
+    fun getOAuthTokenDev(provider: OAuthProvider, code: String): OAuthTokenResponse {
         return when (provider) {
             OAuthProvider.KAKAO -> kakaoOAuthService.getOAuthTokenDev(code)
         }

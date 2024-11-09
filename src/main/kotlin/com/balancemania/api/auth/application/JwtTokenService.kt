@@ -14,7 +14,6 @@ import com.balancemania.api.extension.toInstant
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 import java.util.Date
 
@@ -74,16 +73,6 @@ class JwtTokenService(
         return mapper.readValue(payload)
     }
 
-    fun verifyTokenMono(authUserToken: Mono<AuthUserToken>): Mono<AuthUserTokenPayload> {
-        return authUserToken.flatMap { jwtToken ->
-            Mono.fromCallable { verifyToken(jwtToken) }
-                .onErrorResume { e ->
-                    logger.warn { e.message }
-                    Mono.error(InvalidTokenException(ErrorCode.FAIL_TO_VERIFY_TOKEN_ERROR))
-                }
-        }
-    }
-
     fun createRefreshToken(id: Long, refreshTokenExpiresAt: LocalDateTime): String {
         return JWT.create().apply {
             this.withIssuer(jwtConfig.issuer)
@@ -94,7 +83,7 @@ class JwtTokenService(
         }.sign(Algorithm.HMAC256(jwtConfig.secretKey))
     }
 
-    suspend fun verifyRefreshToken(refreshToken: String): AuthUserTokenPayload {
+    fun verifyRefreshToken(refreshToken: String): AuthUserTokenPayload {
         val payload = runCatching { refreshJwtVerifier.verify(refreshToken).payload.decodeBase64() }
             .getOrNull() ?: throw InvalidTokenException(ErrorCode.INVALID_REFRESH_TOKEN)
 

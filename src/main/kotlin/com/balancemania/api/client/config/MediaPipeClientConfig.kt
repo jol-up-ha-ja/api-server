@@ -2,7 +2,6 @@ package com.balancemania.api.client.config
 
 import com.balancemania.api.client.WebClientFactory
 import com.balancemania.api.client.mediapipe.MediaPipeClient
-import com.balancemania.api.client.mediapipe.SuspendableMediaPipeClient
 import com.balancemania.api.config.MediaPipeConfig
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.context.annotation.Bean
@@ -22,6 +21,6 @@ class MediaPipeClientConfig(
             writeTimeoutMillis = 1000 * 10
         )
         logger.info { "initialized mediaPipe client" }
-        return SuspendableMediaPipeClient(webClient, mediaPipeConfig)
+        return MediaPipeClient.Default(webClient, mediaPipeConfig)
     }
 }

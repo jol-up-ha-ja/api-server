@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class S3Facade(
     private val s3PresignedUrlService: S3PresignedUrlService,
 ) {
-    suspend fun getPresignedUrl(user: AuthUser, imgType: ImageType): S3PresignedUrlResponse {
+    fun getPresignedUrl(user: AuthUser, imgType: ImageType): S3PresignedUrlResponse {
         return s3PresignedUrlService.generatePresignedUrl(user, imgType)
             .let { model ->
                 S3PresignedUrlResponse(

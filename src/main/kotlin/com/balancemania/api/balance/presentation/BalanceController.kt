@@ -23,33 +23,33 @@ class BalanceController(
     fun getBalances(
         user: AuthUser,
         @ParameterObject sliceRequest: ManiaPageRequest,
-    ) = executeWithCoroutine { balanceFacade.getBalances(user, sliceRequest) }.wrapSlice()
+    ) = balanceFacade.getBalances(user, sliceRequest).wrapSlice()
 
     @Operation(summary = "균형 정보 단일 조회")
     @GetMapping("/{balanceId}")
     fun getBalance(
         user: AuthUser,
         @PathVariable balanceId: Long,
-    ) = executeWithCoroutine { balanceFacade.getBalance(user, balanceId) }.wrapOk()
+    ) = balanceFacade.getBalance(user, balanceId).wrapOk()
 
     @Operation(summary = "균형 정보 등록")
     @PostMapping
     fun createBalance(
         user: AuthUser,
         @RequestBody request: CreateBalanceRequest,
-    ) = executeWithCoroutine { balanceFacade.createBalance(user, request) }.wrapCreated()
+    ) = balanceFacade.createBalance(user, request).wrapCreated()
 
     @Operation(summary = "무게 정보 임시 등록")
     @PostMapping("/weight")
     fun postWeight(
         user: AuthUser,
         @RequestBody request: PostWeightRequest,
-    ) = executeWithCoroutine { balanceFacade.postWeight(user, request) }.wrapCreated()
+    ) = balanceFacade.postWeight(user, request).wrapCreated()
 
     @Operation(summary = "균형 정보 삭제")
     @DeleteMapping("/{balanceId}")
     fun deleteBalance(
         user: AuthUser,
         @PathVariable balanceId: Long,
-    ) = executeWithCoroutine { balanceFacade.deleteBalance(user, balanceId) }.wrapVoid()
+    ) = balanceFacade.deleteBalance(user, balanceId).wrapVoid()
 }

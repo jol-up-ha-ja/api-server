@@ -1,7 +1,6 @@
 package com.balancemania.api.user.presentation
 
 import com.balancemania.api.auth.model.AuthUser
-import com.balancemania.api.extension.executeWithCoroutine
 import com.balancemania.api.extension.wrapCreated
 import com.balancemania.api.extension.wrapOk
 import com.balancemania.api.user.application.UserFacade
@@ -22,7 +21,7 @@ class UserController(
     @GetMapping("/my-info")
     fun getUserInfo(
         user: AuthUser,
-    ) = executeWithCoroutine { userFacade.getUserInfo(user) }.wrapOk()
+    ) = userFacade.getUserInfo(user).wrapOk()
 
     @Operation(summary = "유저 정보 수정")
     @PatchMapping("/{uid}")
@@ -30,5 +29,5 @@ class UserController(
         user: AuthUser,
         @PathVariable uid: Long,
         @RequestBody request: UpdateUserInfoRequest,
-    ) = executeWithCoroutine { userFacade.updateUserInfo(user, uid, request) }.wrapCreated()
+    ) = userFacade.updateUserInfo(user, uid, request).wrapCreated()
 }

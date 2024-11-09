@@ -33,3 +33,20 @@ suspend fun <RETURN> TransactionTemplate.coExecuteOrNull(
         transactionTemplate.execute(actions)
     }
 }
+
+fun <RETURN> TransactionTemplate.executeNotNull(
+    actions: TransactionCallback<RETURN>,
+): RETURN {
+    val transactionTemplate: TransactionTemplate = this
+
+    return transactionTemplate.execute(actions)
+        ?: throw FailToExecuteException(ErrorCode.FAIL_TO_TRANSACTION_TEMPLATE_EXECUTE_ERROR)
+}
+
+fun <RETURN> TransactionTemplate.executeOrNull(
+    actions: TransactionCallback<RETURN>,
+): RETURN? {
+    val transactionTemplate: TransactionTemplate = this
+
+    return transactionTemplate.execute(actions)
+}

@@ -1,7 +1,6 @@
 package com.balancemania.api.auth.presentation
 
 import com.balancemania.api.auth.application.DevOAuthService
-import com.balancemania.api.extension.executeWithCoroutine
 import com.balancemania.api.extension.wrapOk
 import com.balancemania.api.user.domain.vo.OAuthProvider
 import io.swagger.v3.oas.annotations.Operation
@@ -20,7 +19,7 @@ class DevOAuthController(
     @GetMapping("/{provider}/link")
     fun getDevOAuthLoginLink(
         @PathVariable provider: OAuthProvider,
-    ) = executeWithCoroutine { devOAuthService.getOAuthLoginLinkDev(provider).wrapOk() }
+    ) = devOAuthService.getOAuthLoginLinkDev(provider).wrapOk()
 
     /** oauth 토큰 받아옵니다. 개발용 */
     @Operation(tags = ["개발용 OAuth API"], summary = "dev oauth link")
@@ -28,5 +27,5 @@ class DevOAuthController(
     fun getDevOAuthLogin(
         @PathVariable provider: OAuthProvider,
         @RequestParam code: String,
-    ) = executeWithCoroutine { devOAuthService.getOAuthTokenDev(provider, code).wrapOk() }
+    ) = devOAuthService.getOAuthTokenDev(provider, code).wrapOk()
 }

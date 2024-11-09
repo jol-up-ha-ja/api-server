@@ -3,7 +3,6 @@ package com.balancemania.api.auth.presentation
 import com.balancemania.api.auth.application.OAuthFacade
 import com.balancemania.api.auth.model.request.OAuthLoginRequest
 import com.balancemania.api.auth.model.request.OAuthRegisterRequest
-import com.balancemania.api.extension.executeWithCoroutine
 import com.balancemania.api.extension.wrapCreated
 import com.balancemania.api.extension.wrapOk
 import com.balancemania.api.user.domain.vo.OAuthProvider
@@ -25,7 +24,7 @@ class OAuthController(
     fun checkRegisterValid(
         @PathVariable provider: OAuthProvider,
         @RequestParam accessToken: String,
-    ) = executeWithCoroutine { oAuthFacade.checkRegisterValid(provider, accessToken).wrapOk() }
+    ) = oAuthFacade.checkRegisterValid(provider, accessToken).wrapOk()
 
     /** 회원가입을 합니다. */
     @Operation(summary = "register")
@@ -34,7 +33,7 @@ class OAuthController(
         @PathVariable provider: OAuthProvider,
         @RequestBody request: OAuthRegisterRequest,
         @RequestParam accessToken: String,
-    ) = executeWithCoroutine { oAuthFacade.register(provider, accessToken, request).wrapCreated() }
+    ) = oAuthFacade.register(provider, accessToken, request).wrapCreated()
 
     /** 로그인을 합니다. */
     @Operation(summary = "login")
@@ -42,5 +41,5 @@ class OAuthController(
     fun login(
         @PathVariable provider: OAuthProvider,
         @RequestBody request: OAuthLoginRequest,
-    ) = executeWithCoroutine { oAuthFacade.login(provider, request).wrapOk() }
+    ) = oAuthFacade.login(provider, request).wrapOk()
 }
