@@ -2,6 +2,6 @@ package com.balancemania.api.extension
 
 import kotlin.math.roundToLong
 
-fun Float.toInteger(): Long = (this * 10000).roundToLong()
+fun Double.toInteger(): Long = (this * 10000).roundToLong()
 
-fun Long.toRealNumber(): Float = this / 10000f
+fun Long.toRealNumber(): Double = (this / 10000).toDouble()

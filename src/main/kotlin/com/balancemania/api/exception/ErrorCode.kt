@@ -33,5 +33,8 @@ enum class ErrorCode(val status: HttpStatus, val description: String) {
 
     /** Balance Error Code */
     NOT_FOUND_BALANCE_ERROR(HttpStatus.NOT_FOUND, "균형 정보를 찾을 수 없습니다."),
+
+    /** Weight Error Code */
+    NOT_FOUND_WEIGHT_ERROR(HttpStatus.NOT_FOUND, "무게 정보를 찾을 수 없습니다."),
     ;
 }

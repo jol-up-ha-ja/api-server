@@ -3,6 +3,7 @@ package com.balancemania.api.balance.presentation
 import com.balancemania.api.auth.model.AuthUser
 import com.balancemania.api.balance.application.BalanceFacade
 import com.balancemania.api.balance.model.request.CreateBalanceRequest
+import com.balancemania.api.balance.model.request.PostWeightRequest
 import com.balancemania.api.common.dto.ManiaPageRequest
 import com.balancemania.api.extension.*
 import io.swagger.v3.oas.annotations.Operation
@@ -37,6 +38,13 @@ class BalanceController(
         user: AuthUser,
         @RequestBody request: CreateBalanceRequest,
     ) = executeWithCoroutine { balanceFacade.createBalance(user, request) }.wrapCreated()
+
+    @Operation(summary = "무게 정보 임시 등록")
+    @PostMapping("/weight")
+    fun postWeight(
+        user: AuthUser,
+        @RequestBody request: PostWeightRequest,
+    ) = executeWithCoroutine { balanceFacade.postWeight(user, request) }.wrapCreated()
 
     @Operation(summary = "균형 정보 삭제")
     @DeleteMapping("/{balanceId}")

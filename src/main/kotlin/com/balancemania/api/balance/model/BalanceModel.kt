@@ -11,28 +11,28 @@ data class BalanceModel(
     val uid: Long,
 
     /** 정면 어깨 각도 */
-    val frontShoulderAngle: Float,
+    val frontShoulderAngle: Double,
 
     /** 정면 골반 각도 */
-    val frontPelvisAngle: Float,
+    val frontPelvisAngle: Double,
 
     /** 정면 무릎 각도 */
-    val frontKneeAngle: Float,
+    val frontKneeAngle: Double,
 
     /** 정면 발목 각도 */
-    val frontAnkleAngle: Float,
+    val frontAnkleAngle: Double,
 
     /** 측면 목 각도 */
-    val sideNeckAngle: Float,
+    val sideNeckAngle: Double,
 
     /** 측면 신체 각도 */
-    val sideBodyAngle: Float,
+    val sideBodyAngle: Double,
 
     /** 좌측 무게 */
-    val leftWeight: Float,
+    val leftWeight: Double,
 
     /** 우측 무게 */
-    val rightWeight: Float,
+    val rightWeight: Double,
 
     /** 생성일 */
     val createdAt: LocalDateTime,

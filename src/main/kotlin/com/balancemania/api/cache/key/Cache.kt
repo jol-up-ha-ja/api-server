@@ -1,5 +1,6 @@
 package com.balancemania.api.cache.key
 
+import com.balancemania.api.balance.domain.Weight
 import com.balancemania.api.common.util.toTypeReference
 import com.fasterxml.jackson.core.type.TypeReference
 import java.time.Duration
@@ -15,6 +16,14 @@ data class Cache<VALUE_TYPE>(
                 key = key,
                 type = toTypeReference(),
                 duration = Duration.ofSeconds(ttl)
+            )
+        }
+
+        fun getWeightCache(key: String): Cache<Weight> {
+            return Cache(
+                key = key,
+                type = toTypeReference(),
+                duration = Duration.ofSeconds(3600)
             )
         }
     }
