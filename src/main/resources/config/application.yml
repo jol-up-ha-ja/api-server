@@ -63,6 +63,7 @@ mania:
       hibernate.hbm2ddl.auto: none
     show-sql: false
     database: mysql
+    open-in-view: false
 
 # AUTH
 auth:

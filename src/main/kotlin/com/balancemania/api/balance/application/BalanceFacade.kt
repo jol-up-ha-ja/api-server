@@ -75,12 +75,10 @@ class BalanceFacade(
     }
 
     fun postWeight(user: AuthUser, request: PostWeightRequest) {
-        txTemplates.writer.executeNotNull {
-            Weight(
-                uid = user.uid,
-                rightWeight = request.rightWeight.toInteger(),
-                leftWeight = request.leftWeight.toInteger()
-            ).also { weightService.save(it) }
-        }
+        Weight(
+            uid = user.uid,
+            rightWeight = request.rightWeight.toInteger(),
+            leftWeight = request.leftWeight.toInteger()
+        ).also { weightService.save(it) }
     }
 }

@@ -8,7 +8,6 @@ import com.balancemania.api.common.KAKAO_AK
 import com.balancemania.api.config.auth.OAuthUrlConfig
 import com.balancemania.api.extension.awaitWithMdc
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient

@@ -5,7 +5,6 @@ import com.balancemania.api.client.mediapipe.model.MediaPipeImgAnalysisResponse
 import com.balancemania.api.config.MediaPipeConfig
 import com.balancemania.api.extension.awaitWithMdc
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
 interface MediaPipeClient {

@@ -5,12 +5,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
-import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
-import org.springframework.data.redis.core.ReactiveRedisTemplate
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
-import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @Configuration
@@ -24,18 +22,22 @@ class RedisConfig(
      */
     @Bean
     @Primary
-    fun reactiveRedisConnectionFactory(): RedisConnectionFactory {
+    fun redisConnectionFactory(): RedisConnectionFactory {
         return LettuceConnectionFactory(properties.host, properties.port)
     }
 
     @Bean
-    fun reactiveRedisTemplate(factory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
+    fun redisTemplate(factory: RedisConnectionFactory): RedisTemplate<String, String> {
         val jdkSerializationRedisSerializer = JdkSerializationRedisSerializer()
         val stringRedisSerializer = StringRedisSerializer.UTF_8
-        return ReactiveRedisTemplate(
-            factory,
-            RedisSerializationContext.newSerializationContext<String, String>(jdkSerializationRedisSerializer)
-                .key(stringRedisSerializer).value(stringRedisSerializer).build()
-        )
+
+        return RedisTemplate<String, String>().also {
+            it.connectionFactory = factory
+            it.keySerializer = stringRedisSerializer
+            it.valueSerializer = stringRedisSerializer
+            it.hashKeySerializer = stringRedisSerializer
+            it.hashValueSerializer = jdkSerializationRedisSerializer
+            it.afterPropertiesSet()
+        }
     }
 }
