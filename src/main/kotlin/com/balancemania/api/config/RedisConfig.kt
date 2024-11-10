@@ -28,7 +28,6 @@ class RedisConfig(
 
     @Bean
     fun redisTemplate(factory: RedisConnectionFactory): RedisTemplate<String, String> {
-        val jdkSerializationRedisSerializer = JdkSerializationRedisSerializer()
         val stringRedisSerializer = StringRedisSerializer.UTF_8
 
         return RedisTemplate<String, String>().also {
@@ -36,8 +35,7 @@ class RedisConfig(
             it.keySerializer = stringRedisSerializer
             it.valueSerializer = stringRedisSerializer
             it.hashKeySerializer = stringRedisSerializer
-            it.hashValueSerializer = jdkSerializationRedisSerializer
-            it.afterPropertiesSet()
+            it.hashValueSerializer = stringRedisSerializer
         }
     }
 }
